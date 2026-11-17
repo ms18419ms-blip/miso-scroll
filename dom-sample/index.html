@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DOM 操作のサンプル</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main>
+  <h1>DOM 操作のサンプル</h1>
+  <p class="lead">ボタンを押すと、JavaScript が HTML や CSS を書き換えます。functions.js を開いて、どの行が何をしているか見てみましょう。</p>
+
+  <!-- サンプル1:文字を書き換える -->
+  <section class="card">
+    <h2>1. 文字を書き換える</h2>
+    <button id="count-btn">押してみる</button>
+    <p id="message">まだ押されていません</p>
+  </section>
+
+  <!-- サンプル2:CSS(見た目)を書き換える -->
+  <section class="card" id="color-card">
+    <h2>2. 背景色を変える</h2>
+    <button id="color-btn">背景色を変える</button>
+    <p>この箱の背景色が変わります</p>
+  </section>
+
+  <!-- サンプル3:function にまとめる -->
+  <section class="card">
+    <h2>3. function にまとめる</h2>
+    <div class="row">
+      <button class="pick-btn" data-name="大豆">大豆</button>
+      <button class="pick-btn" data-name="麹">麹</button>
+      <button class="pick-btn" data-name="塩">塩</button>
+    </div>
+    <p id="picked">原料をえらんでください</p>
+  </section>
+</main>
+<script src="functions.js"></script>
+</body>
+</html>

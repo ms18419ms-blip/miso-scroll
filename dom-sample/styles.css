@@ -1,0 +1,11 @@
+body { margin: 0; background: #f9f4ef; color: #2b1d14; font-family: "Hiragino Sans", "Yu Gothic", sans-serif; }
+main { max-width: 720px; margin: 0 auto; padding: 48px 24px; }
+h1 { font-size: 28px; margin: 0 0 8px; }
+.lead { color: #6b5442; line-height: 1.8; }
+.card { background: #fff; border: 2px solid #e2d5c5; padding: 24px 28px; margin-top: 24px; transition: background-color .4s; }
+.card h2 { font-size: 20px; margin: 0 0 16px; }
+button { font: inherit; font-size: 16px; padding: 10px 20px; border: none; background: #2b4a7a; color: #fff; cursor: pointer; }
+button:hover { opacity: .85; }
+.row { display: flex; gap: 12px; }
+.pick-btn { background: #8c7851; }
+#message, #picked { font-size: 20px; margin: 16px 0 0; }

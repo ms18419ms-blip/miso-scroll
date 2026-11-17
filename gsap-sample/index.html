@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GSAP のサンプル</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main>
+  <h1>GSAP のサンプル</h1>
+  <p class="lead">「動かす」を押すと、下のコードが実行されます。functions.js にも同じコードがあります。数字を変えて保存し、動きがどう変わるか試してみましょう。</p>
+  <p class="lead">書き方の基本:<code>gsap.to("どれを", { どう変えるか, 何秒で })</code></p>
+  <h2 class="sec">ボタンで動かす</h2>
+
+  <section class="card" id="card-to">
+    <h2>1. gsap.to:今の状態 → 指定した状態へ</h2>
+    <p class="desc">いちばんよく使う形。今いる場所から、x: 300 の場所へ1秒かけて動く。</p>
+    <div class="stage"><div class="box" id="box-to"></div></div>
+    <button id="btn-to">動かす</button>
+    <pre><code>document.getElementById(&quot;btn-to&quot;).addEventListener(&quot;click&quot;, () =&gt; {
+  gsap.set(&quot;#box-to&quot;, { x: 0 });                  // 最初の位置にもどす
+  gsap.to(&quot;#box-to&quot;, { x: 300, duration: 1 });     // 右へ 300px、1秒で
+});</code></pre>
+  </section>
+
+  <section class="card" id="card-from">
+    <h2>2. gsap.from:指定した状態 → 今の状態へ</h2>
+    <p class="desc">to の逆。左の外(x: -300)で透明な状態から、今の場所へ現れる。</p>
+    <div class="stage"><div class="box" id="box-from"></div></div>
+    <button id="btn-from">動かす</button>
+    <pre><code>document.getElementById(&quot;btn-from&quot;).addEventListener(&quot;click&quot;, () =&gt; {
+  gsap.from(&quot;#box-from&quot;, { x: -300, opacity: 0, duration: 1 });
+});</code></pre>
+  </section>
+
+  <section class="card" id="card-fromto">
+    <h2>3. gsap.fromTo:始まりと終わりを両方決める</h2>
+    <p class="desc">1つめの { } が始まり、2つめの { } が終わり。小さい状態から、大きくなりながら右へ。</p>
+    <div class="stage"><div class="box" id="box-fromto"></div></div>
+    <button id="btn-fromto">動かす</button>
+    <pre><code>document.getElementById(&quot;btn-fromto&quot;).addEventListener(&quot;click&quot;, () =&gt; {
+  gsap.fromTo(&quot;#box-fromto&quot;,
+    { x: 0, scale: 0.3 },                         // 始まり
+    { x: 300, scale: 1, duration: 1 });           // 終わり
+});</code></pre>
+  </section>
+
+  <section class="card" id="card-set">
+    <h2>4. gsap.set:時間をかけず、一瞬で</h2>
+    <p class="desc">duration がない。押した瞬間に x: 300 の場所へ移る。最初の位置にもどすときにも使う。</p>
+    <div class="stage"><div class="box" id="box-set"></div></div>
+    <button id="btn-set">動かす</button>
+    <pre><code>document.getElementById(&quot;btn-set&quot;).addEventListener(&quot;click&quot;, () =&gt; {
+  gsap.set(&quot;#box-set&quot;, { x: 300 });                // 一瞬で右へ
+});</code></pre>
+  </section>
+
+  <section class="card" id="card-ease">
+    <h2>5. ease:速さの変化を変える</h2>
+    <p class="desc">同じ距離・同じ時間でも、ease で印象が変わる。none は一定、power2.out は最後にゆっくり、back.out は少し行き過ぎてもどる。</p>
+    <div class="stage"><div class="box small" id="box-ease1"></div><div class="box small" id="box-ease2"></div><div class="box small" id="box-ease3"></div></div>
+    <button id="btn-ease">動かす</button>
+    <pre><code>document.getElementById(&quot;btn-ease&quot;).addEventListener(&quot;click&quot;, () =&gt; {
+  gsap.set(&quot;.small&quot;, { x: 0 });
+  gsap.to(&quot;#box-ease1&quot;, { x: 300, duration: 1, ease: &quot;none&quot; });
+  gsap.to(&quot;#box-ease2&quot;, { x: 300, duration: 1, ease: &quot;power2.out&quot; });
+  gsap.to(&quot;#box-ease3&quot;, { x: 300, duration: 1, ease: &quot;back.out(2)&quot; });
+});</code></pre>
+  </section>
+
+  <section class="card" id="card-props">
+    <h2>6. 位置のほかに、動かせるもの</h2>
+    <p class="desc">回転(rotation)、大きさ(scale)、色(backgroundColor)、角の丸み(borderRadius)も、同じ書き方で動かせる。</p>
+    <div class="stage"><div class="box" id="box-props"></div></div>
+    <button id="btn-props">動かす</button>
+    <pre><code>document.getElementById(&quot;btn-props&quot;).addEventListener(&quot;click&quot;, () =&gt; {
+  gsap.set(&quot;#box-props&quot;, {                        // 最初の状態にもどす
+    rotation: 0, scale: 1, backgroundColor: &quot;#2b4a7a&quot;, borderRadius: 0 });
+  gsap.to(&quot;#box-props&quot;, {
+    rotation: 180,                 // 180度回す
+    scale: 1.4,                    // 1.4倍にする
+    backgroundColor: &quot;#e0894f&quot;,    // 色を変える
+    borderRadius: 40,              // 角を丸くする
+    duration: 1.2
+  });
+});</code></pre>
+  </section>
+
+  <section class="card" id="card-repeat">
+    <h2>7. repeat と yoyo:くり返す</h2>
+    <p class="desc">repeat は「最初の1回のあと、何回くり返すか」。yoyo: true にすると、くり返すたびに向きが逆になるので、行き・帰りで1回ずつ数える。repeat: 5 で、行き帰りが3往復。-1 にすると、ずっとくり返す。</p>
+    <div class="stage"><div class="box" id="box-repeat"></div></div>
+    <button id="btn-repeat">動かす</button>
+    <pre><code>document.getElementById(&quot;btn-repeat&quot;).addEventListener(&quot;click&quot;, () =&gt; {
+  gsap.set(&quot;#box-repeat&quot;, { x: 0 });
+  gsap.to(&quot;#box-repeat&quot;, { x: 300, duration: 0.5, repeat: 5, yoyo: true });   // 3往復
+});</code></pre>
+  </section>
+
+  <section class="card" id="card-stagger">
+    <h2>8. stagger:少しずつずらす</h2>
+    <p class="desc">同じ class の箱をまとめて動かし、0.1秒ずつずらして順番に動かす。第5章の産地の点で使っている。</p>
+    <div class="stage"><div class="row"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>
+    <button id="btn-stagger">動かす</button>
+    <pre><code>document.getElementById(&quot;btn-stagger&quot;).addEventListener(&quot;click&quot;, () =&gt; {
+  gsap.fromTo(&quot;.dot&quot;,
+    { y: 0 },
+    { y: -40, duration: 0.3, stagger: 0.1, repeat: 1, yoyo: true });
+});</code></pre>
+  </section>
+
+  <section class="card" id="card-timeline">
+    <h2>9. timeline:動きを順番に並べる</h2>
+    <p class="desc">tl.to を書いた順に、1つ終わったら次が動く。第6章の蔵で使っている。</p>
+    <div class="stage"><div class="box small tl" id="tl-1"></div><div class="box small tl" id="tl-2"></div><div class="box small tl" id="tl-3"></div></div>
+    <button id="btn-timeline">動かす</button>
+    <pre><code>document.getElementById(&quot;btn-timeline&quot;).addEventListener(&quot;click&quot;, () =&gt; {
+  gsap.set(&quot;.tl&quot;, { x: 0 });
+  const tl = gsap.timeline();
+  tl.to(&quot;#tl-1&quot;, { x: 300, duration: 0.5 });       // 1つめ
+  tl.to(&quot;#tl-2&quot;, { x: 300, duration: 0.5 });       // 1つめが終わったら 2つめ
+  tl.to(&quot;#tl-3&quot;, { x: 300, duration: 0.5 });       // 2つめが終わったら 3つめ
+});</code></pre>
+  </section>
+
+  <section class="card" id="card-path">
+    <h2>10. パスアニメーション:線を描く</h2>
+    <p class="desc">SVG の線(path)の長さを測り、「線とすき間」をずらして、描いているように見せる。第5章の地図のルートと同じしくみ。</p>
+    <div class="stage"><svg class="draw" viewBox="0 0 400 120"><path id="path" d="M10,100 C90,0 150,0 200,60 S310,120 390,20" fill="none" stroke="#e0894f" stroke-width="6" stroke-linecap="round"/></svg></div>
+    <button id="btn-path">動かす</button>
+    <pre><code>document.getElementById(&quot;btn-path&quot;).addEventListener(&quot;click&quot;, () =&gt; {
+  const path = document.getElementById(&quot;path&quot;);
+  const len = path.getTotalLength();               // 線の長さを測る
+  gsap.fromTo(path,
+    { strokeDasharray: len, strokeDashoffset: len },  // 見えない状態から
+    { strokeDashoffset: 0, duration: 2 });            // 全部見える状態へ
+});</code></pre>
+  </section>
+
+  <h2 class="sec">スクロールで動かす(ScrollTrigger)</h2>
+  <p class="lead">ここからはボタンがない。ページをスクロールすると動く。gsap.to の中に scrollTrigger: { … } を書くと、スクロールの位置をきっかけに動く。</p>
+
+  <section class="card" id="card-st">
+    <h2>11. ScrollTrigger の基本:画面のある位置に来たら動かす</h2>
+    <p class="desc">trigger は「どの要素の位置を見るか」、start は「要素のどこ」と「画面のどこ」の2語。"top 80%" は「箱の上端が、画面の上から80%の線に来たら」。scrub がないので、線を越えた瞬間に1秒で最後まで動く。markers: true で、右に線が出る。</p>
+    <div class="stage"><div class="box" id="box-st"></div></div>
+    
+    <pre><code>gsap.to(&quot;#box-st&quot;, {
+  x: 300,
+  duration: 1,
+  scrollTrigger: {
+    trigger: &quot;#box-st&quot;,        // この箱の位置を見る
+    start: &quot;top 80%&quot;,          // 箱の上端が、画面の上から80%に来たら
+    markers: true,             // 線を表示(確かめたら消す)
+  },
+});</code></pre>
+  </section>
+
+  <section class="card" id="card-scrub">
+    <h2>12. scrub:スクロールに合わせて動かす</h2>
+    <p class="desc">scrub を付けると、スクロール量がそのまま動きの進み具合になる。戻すと戻る。上の箱は scrub: true(ぴったり)、下の箱は scrub: 1(1秒遅れてなめらかに追いつく)。end で終わりの位置も決める。第4章の樽と同じしくみ。</p>
+    <div class="stage"><div class="box" id="box-scrub"></div><div class="box" id="box-scrub2" style="margin-top:12px;background:#e0894f"></div></div>
+    
+    <pre><code>gsap.to(&quot;#box-scrub&quot;, {
+  x: 300,
+  ease: &quot;none&quot;,                // スクロールと同じ割合で進める
+  scrollTrigger: {
+    trigger: &quot;#box-scrub&quot;,
+    start: &quot;top 80%&quot;,          // 80%の線に来たら始まり
+    end: &quot;top 30%&quot;,            // 30%の線に来たら終わり
+    scrub: true,               // ぴったり追いかける
+    markers: true,
+  },
+});
+gsap.to(&quot;#box-scrub2&quot;, {
+  x: 300,
+  ease: &quot;none&quot;,
+  scrollTrigger: {
+    trigger: &quot;#box-scrub&quot;,     // 上の箱と同じ位置を見る
+    start: &quot;top 80%&quot;,
+    end: &quot;top 30%&quot;,
+    scrub: 1,                  // 1秒遅れて、なめらかに追いつく
+  },
+});</code></pre>
+  </section>
+
+  <section class="card" id="card-pin">
+    <h2>13. pin:画面に固定して、その間に動かす</h2>
+    <p class="desc">このカードが画面の上に来ると、カードが止まり(pin)、600px スクロールする間に箱が動く。動き終わると、またふつうにスクロールする。end: "+=600" は「始まりから 600px 先」。第4章・第6章と同じしくみ。</p>
+    <div class="stage"><div class="box" id="box-pin"></div></div>
+    
+    <pre><code>gsap.to(&quot;#box-pin&quot;, {
+  x: 300,
+  rotation: 360,
+  ease: &quot;none&quot;,
+  scrollTrigger: {
+    trigger: &quot;#card-pin&quot;,      // このカード全体を
+    start: &quot;top top&quot;,          // 画面の上端に来たら
+    end: &quot;+=600&quot;,              // そこから 600px スクロールする間
+    scrub: true,
+    pin: true,                 // 画面に固定する
+  },
+});</code></pre>
+  </section>
+
+  <section class="card" id="card-cb">
+    <h2>14. コールバック:入った・出たで、処理を呼ぶ</h2>
+    <p class="desc">ScrollTrigger.create は、動きを付けずに「区間に入った・出た」だけを知らせる。下へ進んで入ると onEnter、下へ抜けると onLeave、上へ戻って入ると onEnterBack、上へ戻って出ると onLeaveBack。箱の中の文字と色が変わる。第5章の地図と同じしくみ。</p>
+    <div class="stage"><div class="box wide" id="box-cb">まだ</div></div>
+    
+    <pre><code>const cbBox = document.getElementById(&quot;box-cb&quot;);
+function showName(name, color) {   // 箱の文字と色を変える
+  cbBox.textContent = name;
+  gsap.to(cbBox, { backgroundColor: color });
+}
+ScrollTrigger.create({
+  trigger: &quot;#box-cb&quot;,
+  start: &quot;top 60%&quot;,            // 箱の上端が60%の線に来たら区間に入る
+  end: &quot;bottom 40%&quot;,           // 箱の下端が40%の線に来たら区間を出る
+  onEnter:     () =&gt; showName(&quot;onEnter&quot;,     &quot;#e0894f&quot;),  // 下へ進んで入った
+  onLeave:     () =&gt; showName(&quot;onLeave&quot;,     &quot;#8c7851&quot;),  // 下へ進んで出た
+  onEnterBack: () =&gt; showName(&quot;onEnterBack&quot;, &quot;#6aa84f&quot;),  // 上へ戻って入った
+  onLeaveBack: () =&gt; showName(&quot;onLeaveBack&quot;, &quot;#2b4a7a&quot;),  // 上へ戻って出た
+});</code></pre>
+  </section>
+
+  <section class="card" id="card-once">
+    <h2>15. once:一度だけ動かす</h2>
+    <p class="desc">once: true にすると、最初に区間に入ったときに1回だけ呼ばれ、そのあとは何もしない。上に戻ってもう一度来ても、動かない。ページの最後のお椀と同じしくみ。</p>
+    <div class="stage"><div class="box" id="box-once"></div></div>
+    
+    <pre><code>ScrollTrigger.create({
+  trigger: &quot;#box-once&quot;,
+  start: &quot;top 70%&quot;,
+  once: true,                  // 一度だけ
+  onEnter: () =&gt; gsap.to(&quot;#box-once&quot;, { x: 300, rotation: 360, duration: 1 }),
+});</code></pre>
+  </section>
+
+  <section class="card" id="card-tlst">
+    <h2>16. timeline + ScrollTrigger:順番に並べた動きを、スクロールで進める</h2>
+    <p class="desc">timeline に scrollTrigger を付けると、並べた動き全体がスクロールで進む。カードを固定している間に、3つの箱が順番に動く。第6章の蔵と同じしくみ。</p>
+    <div class="stage"><div class="box small tl2" id="tl2-1"></div><div class="box small tl2" id="tl2-2"></div><div class="box small tl2" id="tl2-3"></div></div>
+    
+    <pre><code>const tl2 = gsap.timeline({
+  scrollTrigger: {
+    trigger: &quot;#card-tlst&quot;,
+    start: &quot;top top&quot;,
+    end: &quot;+=900&quot;,              // 900px スクロールする間に、全部が進む
+    scrub: 1,
+    pin: true,
+  },
+});
+tl2.to(&quot;#tl2-1&quot;, { x: 300 });   // 1つめ
+tl2.to(&quot;#tl2-2&quot;, { x: 300 });   // 1つめが終わったら 2つめ
+tl2.to(&quot;#tl2-3&quot;, { x: 300 });   // 2つめが終わったら 3つめ</code></pre>
+  </section>
+
+  <div class="spacer">ここでおしまい</div>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="functions.js"></script>
+</body>
+</html>

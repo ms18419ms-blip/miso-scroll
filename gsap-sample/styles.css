@@ -1,0 +1,21 @@
+body { margin: 0; background: #f9f4ef; color: #2b1d14; font-family: "Hiragino Sans", "Yu Gothic", sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 48px 24px; }
+h1 { font-size: 28px; margin: 0 0 8px; }
+.lead { color: #6b5442; line-height: 1.8; margin: 4px 0; }
+.card { background: #fff; border: 2px solid #e2d5c5; padding: 24px 28px; margin-top: 24px; }
+.card h2 { font-size: 20px; margin: 0 0 6px; }
+.desc { color: #6b5442; line-height: 1.7; margin: 0 0 16px; }
+.stage { border-left: 2px dashed #c9b49a; padding: 8px 0; margin-bottom: 16px; overflow: hidden; }
+.box { width: 60px; height: 60px; background: #2b4a7a; }
+.box.small { width: 36px; height: 36px; margin: 6px 0; }
+.row { display: flex; gap: 12px; padding-top: 40px; }
+.dot { width: 28px; height: 28px; border-radius: 50%; background: #e0894f; }
+button { font: inherit; font-size: 16px; padding: 10px 20px; border: none; background: #2b4a7a; color: #fff; cursor: pointer; }
+button:hover { opacity: .85; }
+pre { background: #020826; color: #f2e9dd; padding: 16px 18px; margin: 16px 0 0; overflow-x: auto; font-size: 14px; line-height: 1.6; }
+code { font-family: Menlo, Consolas, monospace; }
+.lead code { background: #eaddcf; padding: 2px 6px; }
+.draw { width: 100%; max-width: 400px; display: block; }
+.sec { font-size: 22px; margin: 56px 0 4px; padding-bottom: 6px; border-bottom: 3px solid #2b1d14; }
+.box.wide { width: 200px; color: #fff; display: flex; align-items: center; justify-content: center; font-family: Menlo, Consolas, monospace; font-size: 15px; }
+.spacer { height: 70vh; display: flex; align-items: center; justify-content: center; color: #a08a6a; }
