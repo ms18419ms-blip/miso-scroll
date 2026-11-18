@@ -1,5 +1,9 @@
 gsap.registerPlugin(ScrollTrigger);
 
+// ■再読み込みしても、いつもページの一番上から始める
+history.scrollRestoration = "manual"; // ブラウザが前のスクロール位置を覚えるのをやめる
+window.scrollTo(0, 0);
+
 /* ==================================================================
    functions.js の読み方
    ・自分で書くのは【演習】と書いてあるところだけです。
