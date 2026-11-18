@@ -48,17 +48,17 @@ heroAnim.addEventListener("DOMLoaded", () => playBowl(heroAnim)); // 読み込�
 
 // 【演習3-1】つかむ:HTML の id を見て、書き換える要素をつかむ ──────────
 const overlay = document.getElementById("modal-overlay"); // 背景の暗幕
-const mark = document.getElementById("____"); // ① ◯ か △
+const mark = document.getElementById("verdict-mark"); // ① ◯ か △
 const text = document.getElementById("verdict-text"); // 「正解」か「惜しい」
-const hintBox = document.getElementById("____"); // ② ヒントのまとまり
+const hintBox = document.getElementById("hint-box"); // ② ヒントのまとまり
 const hintText = document.getElementById("hint-text"); // ヒントの文
-const answerBox = document.getElementById("____"); // ③ 答えのまとまり
+const answerBox = document.getElementById("answer-box"); // ③ 答えのまとまり
 const closeBtn = document.getElementById("modal-close"); // 閉じるボタン
 
 // 【演習3-2】書き換える:モーダルを開く関数・閉じる関数 ─────────────────
 // 正解なら答えを、不正解ならヒントだけを出して、モーダルを開く
 function openModal(isCorrect, hint) {
-  if (____) {
+  if (isCorrect) {
     // ① 正解なら(引数の名前)
     // 正解のとき
     mark.textContent = "◯";
@@ -72,24 +72,24 @@ function openModal(isCorrect, hint) {
     mark.textContent = "△";
     mark.style.color = "#a08a6a";
     text.textContent = "惜しい";
-    hintText.textContent = ____; // ② 受け取ったヒントの文(引数の名前)
+    hintText.textContent = hint; // ② 受け取ったヒントの文(引数の名前)
     hintBox.style.display = "block";
     answerBox.style.display = "none";
     closeBtn.textContent = "もう一度考える";
   }
-  overlay.classList.add("____"); // ③ 開くときに付けるクラスの名前
+  overlay.classList.add("is-open"); // ③ 開くときに付けるクラスの名前
 }
 
 function closeModal() {
-  overlay.classList.remove("____"); // ④ 閉じるときに外すクラスの名前
+  overlay.classList.remove("is-open"); // ④ 閉じるときに外すクラスの名前
 }
 
 // 【演習3-3】反応する:選択肢がクリックされたら、data 属性を読んで openModal を呼ぶ ──
 document.querySelectorAll(".quiz-btn").forEach((btn) => {
-  btn.addEventListener("____", () => {
+  btn.addEventListener("click", () => {
     // ① クリックされたら
     // ② data-correct の値 / ③ 正解のときの値 / ④ data-hint の値
-    openModal(btn.dataset.____ === "____", btn.dataset.____);
+    openModal(btn.dataset.correct === "true", btn.dataset.hint);
   });
 });
 
@@ -189,15 +189,15 @@ function showLayer(layer) {
   if (!layer) return; // レイヤーがないステップでは何もしない
 
   // ① レイヤーをふわっと出す
-  gsap.to(layer, { autoAlpha: ____, duration: 0.5, overwrite: true });
+  gsap.to(layer, { autoAlpha: 1, duration: 0.5, overwrite: true });
 
   // ② ルートの線を、伸びていくように描く
   layer.querySelectorAll(".route").forEach((path) => {
     const len = path.getTotalLength(); // 線の長さ
     gsap.fromTo(
       path,
-      { strokeDasharray: len, strokeDashoffset: ____ }, // 線が見えない状態から
-      { strokeDashoffset: ____, duration: 1.2, ease: "power2.out" },
+      { strokeDasharray: len, strokeDashoffset: len }, // 線が見えない状態から
+      { strokeDashoffset: 0, duration: 1.2, ease: "power2.out" },
     ); // 全部見える状態へ
   });
 
@@ -205,7 +205,7 @@ function showLayer(layer) {
   gsap.from(layer.querySelectorAll(".spot"), {
     scale: 0,
     opacity: 0,
-    stagger: ____,
+    stagger: 0.1,
     ease: "back.out(2)",
     transformOrigin: "50% 50%",
   });
@@ -244,12 +244,12 @@ document.querySelectorAll(".step").forEach((step) => {
     start: "top 60%", // ステップの上端が、画面の上から60%に来たら
     end: "bottom 60%",
     // markers: true,                        // ← 位置を確かめたいときはコメントを外す
-    ____: () => {
+    onEnter: () => {
       showLayer(layer);
       showPanel(step);
     }, // ① 下に進んで入った
-    ____: () => showPanel(step), // ② 上に戻って入った
-    ____: () => hideLayer(layer), // ③ 上に戻って出た
+    onEnterBack: () => showPanel(step), // ② 上に戻って入った
+    onLeaveBack: () => hideLayer(layer), // ③ 上に戻って出た
   });
 });
 
@@ -295,25 +295,25 @@ const stops = [
   },
   {
     id: "koji",
-    x: ____,
-    y: ____,
-    s: ____,
+    x: 610,
+    y: 690,
+    s: 2.6,
     title: "麹をつくる",
     text: "蒸した米に麹菌をふりかけ、30℃前後に保った部屋で2日ほど。米の表面が白い菌糸でおおわれ、「麹」になります。",
   },
   {
     id: "mix",
-    x: ____,
-    y: ____,
-    s: ____,
+    x: 920,
+    y: 690,
+    s: 2.6,
     title: "混ぜる",
     text: "蒸した大豆に、麹と塩を加えてつぶしながら混ぜます。この時点では、まだ淡い黄色のペースト。麹と塩の割合が、味噌の個性を決めます。",
   },
   {
     id: "taru",
-    x: ____,
-    y: ____,
-    s: ____,
+    x: 1240,
+    y: 650,
+    s: 2.6,
     title: "寝かせる",
     text: "大人の背丈を超える木桶に詰め、石を積んで重しにします。八丁味噌では石を円すい状に積み、2年以上寝かせます。",
   },
@@ -339,11 +339,11 @@ stops.forEach((p) => {
 // 【演習6-2】地点を巡るタイムライン ─────────────────────────────
 const tlKura = gsap.timeline({
   scrollTrigger: {
-    trigger: "____", // ① どの要素で(蔵の章)
-    start: "____", // ② 章の上端が画面の上端に来たら開始
-    end: "+=" + stops.length * ____, // ③ 地点の数 × 1200px スクロールする
-    scrub: ____, // ④ スクロールに合わせて進める(1秒遅れでなめらかに)
-    pin: ____, // ⑤ その間、蔵の章を画面に固定する
+    trigger: "#ch3", // ① どの要素で(蔵の章)
+    start: "top top", // ② 章の上端が画面の上端に来たら開始
+    end: "+=" + stops.length * 1200, // ③ 地点の数 × 1200px スクロールする
+    scrub: 1, // ④ スクロールに合わせて進める(1秒遅れでなめらかに)
+    pin: true, // ⑤ その間、蔵の章を画面に固定する
   },
 });
 
@@ -357,10 +357,9 @@ stops.forEach((p) => {
     duration: 1,
     ease: "power2.inOut",
   });
-  tlKura.to("#cap-" + p.id, { autoAlpha: ____, duration: 0.3 }); // ⑥ キャプションを出す
-  tlKura.to("#cap-" + p.id, { autoAlpha: ____, duration: 0.3 }, "+=1.2"); // ⑦ 1.2 秒読ませてから、消す
+  tlKura.to("#cap-" + p.id, { autoAlpha: 1, duration: 0.3 }); // ⑥ キャプションを出す
+  tlKura.to("#cap-" + p.id, { autoAlpha: 0, duration: 0.3 }, "+=1.2"); // ⑦ 1.2 秒読ませてから、消す
 });
-
 /* ==================================================================
    第4章 GSAP1 スクロールと連動するアニメ(樽)
    ================================================================== */
@@ -403,15 +402,15 @@ const taru = { f: 0 }; // Lottie のコマ番号を入れておく箱(0〜300)
 
 // 【演習4-1】スクロールに合わせて、コマ番号を 0 → 300 へ動かす ──────────
 gsap.to(taru, {
-  f: ____, // ① 最後のコマ番号
-  ease: "____", // ② スクロールと同じ割合で進める ease の名前
+  f: 300, // ① 最後のコマ番号
+  ease: "none", // ② スクロールと同じ割合で進める ease の名前
   onUpdate: showTaru, // 動くたびに showTaru を呼ぶ
   scrollTrigger: {
-    trigger: "____", // ③ どの要素で(樽の章)
-    start: "____", // ④ #ch1 の上端が画面の上端に来たら開始
-    end: "____", // ⑤ そこから 10700px 分スクロールしたら終了
-    scrub: ____, // ⑥ スクロールに合わせて進める(1秒遅れでなめらかに)
-    pin: ____, // ⑦ その間、#ch1 を画面に固定する
+    trigger: "#ch1", // ③ どの要素で(樽の章)
+    start: "top top", // ④ #ch1 の上端が画面の上端に来たら開始
+    end: "+=10700", // ⑤ そこから 10700px 分スクロールしたら終了
+    scrub: 1, // ⑥ スクロールに合わせて進める(1秒遅れでなめらかに)
+    pin: true, // ⑦ その間、#ch1 を画面に固定する
     // markers: true,
   },
 });
@@ -423,7 +422,7 @@ function showTaru() {
   // 【演習4-2】コマ番号から日数を計算する ───────────────────────
   // 0〜75コマは仕込み(0日)。75〜300コマの「225コマ」を、0〜1095日(3年)に置きかえる
   //   日数 = (今のコマ - 仕込みが終わるコマ) ÷ 熟成のコマ数 × 3年の日数
-  const day = Math.max(0, Math.round(((taru.f - ____) / ____) * ____));
+  const day = Math.max(0, Math.round(((taru.f - 75) / 225) * 1095));
   //                                         ↑①          ↑②     ↑③
 
   daysEl.textContent = day.toLocaleString("ja-JP"); // 3桁ごとにカンマを付けて表示
